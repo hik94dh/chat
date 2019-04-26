@@ -1,14 +1,26 @@
+/* eslint-disable */
 import React from 'react';
 import { Form, Icon, Input } from 'antd';
 import { Button, Block } from 'components';
 import { Link } from 'react-router-dom';
 
-class RegisterForm extends React.Component {
-    render() {
-        const success = false;
+const success = false;
 
-        return (
-            <React.Fragment>
+const RegisterForm = props => {
+    const {
+        values,
+        touched,
+        errors,
+        isSubmitting,
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        handleReset,
+        dirty,
+    } = props;
+
+    return (
+        <React.Fragment>
                 <div className="auth__top">
                     <h2>Регистрация</h2>
                     <p>Для входа в чат вам нужно зарегистрироваться</p>
@@ -16,11 +28,16 @@ class RegisterForm extends React.Component {
                 <Block>
                     {!success ? (
                         <Form
-                            onSubmit={this.handleSubmit}
+                            onSubmit={handleSubmit}
                             className="login-form"
                         >
-                            <Form.Item validateStatus="success" hasFeedback>
+                            <Form.Item
+                                help={!touched.email ? "" : errors.email}
+                                validateStatus={!touched.email ? "" : errors.email ? 'error' : 'success'}
+                                hasFeedback
+                            >
                                 <Input
+                                    id="email"
                                     prefix={(
                                         <Icon
                                             type="mail"
@@ -29,6 +46,9 @@ class RegisterForm extends React.Component {
                                     )}
                                     type="email"
                                     placeholder="E-mail"
+                                    value={values.email}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
                                 />
                             </Form.Item>
                             <Form.Item>
@@ -43,16 +63,24 @@ class RegisterForm extends React.Component {
                                     placeholder="Ваше имя"
                                 />
                             </Form.Item>
-                            <Form.Item>
+                            <Form.Item
+                                validateStatus={
+                                    !touched.password ? "" : errors.password ? "error" : "success"
+                                  }
+                                  help={!touched.password ? "" : errors.password}
+                                  hasFeedback
+                            >
                                 <Input
-                                    prefix={(
-                                        <Icon
-                                            type="lock"
-                                            style={{ color: 'rgba(0,0,0,.25)' }}
-                                        />
-                                    )}
+                                    id="password"
+                                    prefix={
+                                      <Icon type="lock" style={{ color: "rgba(0,0,0,.25)" }} />
+                                    }
+                                    size="large"
                                     type="password"
                                     placeholder="Пароль"
+                                    value={values.password}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
                                 />
                             </Form.Item>
                             <Form.Item>
@@ -68,7 +96,7 @@ class RegisterForm extends React.Component {
                                 />
                             </Form.Item>
                             <Form.Item>
-                                <Button type="primary" size="large">
+                                <Button onClick={handleSubmit} type="primary" size="large">
                                     Зарегистрироваться
                                 </Button>
                             </Form.Item>
@@ -88,8 +116,7 @@ class RegisterForm extends React.Component {
                     )}
                 </Block>
             </React.Fragment>
-        );
-    }
+    )
 }
 
 export default RegisterForm;
