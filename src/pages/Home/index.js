@@ -1,36 +1,98 @@
-import React from 'react';
-import './styles.scss';
-import { Message } from 'components';
 /* eslint-disable */
+import React from 'react';
+
+import { Message, Dialogs } from "components";
+
+import './styles.scss';
+
+
 const Home = () => (
     <section className="home">
-        <Message
-        	avatar="https://ru-static.z-dn.net/files/db4/a0fb73ab1fb97457a4511785fe235835.jpg"
-        	text="Привет! Как дела?"
-        	date="Thu Apr 25 2019 14:08:58 GMT+0300"
-        	attachments={[
-		        {
-		          filename: "image.jpg",
-		          url: "https://source.unsplash.com/100x100/?random=1&nature,water"
-		        },
-		        {
-		          filename: "image.jpg",
-		          url: "https://source.unsplash.com/100x100/?random=2&nature,water"
-		        },
-		        {
-		          filename: "image.jpg",
-		          url: "https://source.unsplash.com/100x100/?random=3&nature,water"
-		        }
-		      ]}
+       <Dialogs
+          userId={0}
+          items={[
+            {
+              _id: 1,
+              text:
+                "Мы все свидетельствуем Вам глубочайшее наше почтение и целуем Ваши ручки, дражайший папенька: Михайла, Федор, Варвара и Андрюша",
+              created_at: 'Sun May 28 2019 16:55:40',
+              user: {
+                _id: 1,
+                fullname: "Фёдор Достоевский",
+                avatar: null,
+                // isOnline: true
+              },
+            },
+            {
+              _id: 2,
+              text:
+                "Привет!",
+              created_at: 'Sun May 24 2019 16:55:40',
+              user: {
+                _id: 2,
+                fullname: "Лев Толстой",
+                avatar: 'https://pp.userapi.com/c846017/v846017841/18957c/1iVH9FKXi4E.jpg?ava=1'
+              },
+            }
+          ]}
         />
         <Message
-        	avatar="https://feedback.fl.ru/s/cache/1c/d5/1cd576de28175f80b710814368a9f1a2.png"
-        	text="Привет! Отлично!"
-        	date="Thu Apr 25 2019 14:10:58 GMT+0300"
-        	isMe
-        	isReaded
+          avatar="https://sun1-89.userapi.com/c850424/v850424867/f6869/B-F_i2BilOA.jpg?ava=1"
+          text="Hello, World!"
+          date="Sun Apr 21 2019 21:59:29"
+          audio="http......."
         />
-    </section>
+
+
+
+
+
+
+
+
+
+
+
+    {/* <Message
+      avatar="https://pp.userapi.com/c846017/v846017841/18957c/1iVH9FKXi4E.jpg?ava=1"
+      text="Мы тут недавно войска Ариовиста разбили, чуваки хотели закрепиться на галльских землях, лол 🌝"
+      date="Sun Apr 21 2019 21:55:29"
+      attachments={[
+        {
+          filename: "image.jpg",
+          url: "https://source.unsplash.com/100x100/?random=1&nature,water"
+        },
+        {
+          filename: "image.jpg",
+          url: "https://source.unsplash.com/100x100/?random=2&nature,water"
+        },
+        {
+          filename: "image.jpg",
+          url: "https://source.unsplash.com/100x100/?random=3&nature,water"
+        }
+      ]}
+    />
+    <Message
+      avatar="https://sun1-89.userapi.com/c850424/v850424867/f6869/B-F_i2BilOA.jpg?ava=1"
+      text="Hello, World!"
+      date="Sun Apr 21 2019 21:59:29"
+      isMe={true}
+      isReaded={false}
+    />
+    <Message
+      avatar="https://pp.userapi.com/c846017/v846017841/18957c/1iVH9FKXi4E.jpg?ava=1"
+      attachments={[
+        {
+          filename: "image.jpg",
+          url: "https://source.unsplash.com/100x100/?random=1&nature,water"
+        }
+      ]}
+    />
+    <Message
+      avatar="https://pp.userapi.com/c846017/v846017841/18957c/1iVH9FKXi4E.jpg?ava=1"
+      isTyping
+    /> */}
+  </section>
 );
 
 export default Home;

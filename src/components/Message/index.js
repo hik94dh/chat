@@ -1,63 +1,157 @@
 /* eslint-disable */
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import distanceInWordsToNow from "date-fns/distance_in_words_to_now";
-import ruLocale from "date-fns/locale/ru";
 
+import pause from 'assets/img/pause.svg';
+import play from 'assets/img/play.svg';
+
+import { IconReaded, Time } from '../';
 import './styles.scss';
 
-const Message = ({ avatar, text, date, user, isMe, isReaded, attachments }) => (
-    <div className={classNames('message', {'message--isme': isMe})}>
-    	<div className="message__content">
 
-    		{isMe && isReaded ? (
-	    		<svg className="message__icon-readed" width="15" height="9" viewBox="0 0 15 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path fill-rule="evenodd" clip-rule="evenodd" d="M3.66648 6.87477L10.2103 0.139168C10.3908 -0.0463894 10.6839 -0.0463894 10.8643 0.139168C11.0452 0.324251 11.0452 0.62513 10.8643 0.810213L3.99532 7.88086C3.8167 8.06405 3.51946 8.06405 3.34084 7.88086L0.135337 4.60679C-0.0451125 4.42171 -0.0451125 4.1213 0.135337 3.93575C0.315787 3.75019 0.608904 3.75019 0.789354 3.93575L3.66648 6.87477ZM7.14111 7.06654L14.1548 0.139864C14.3479 -0.0466214 14.6616 -0.0466214 14.8548 0.139864C15.0484 0.325873 15.0484 0.628256 14.8548 0.814264L7.55877 8.13855C7.3676 8.32265 5.87166 7.56707 5.75484 7.46285C5.64238 7.36252 6.30121 6.77489 6.30121 6.77489C6.50611 6.87518 7.08691 7.12008 7.14111 7.06654Z" fill="#0C8FE4"/>
-				</svg>
-    		) : (
-				<svg className="message__icon-readed message__icon-readed--no" width="11" height="9" viewBox="0 0 11 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-					<path fill-rule="evenodd" clip-rule="evenodd" d="M10.2103 0.139168L3.66648 6.87477L0.789354 3.93575C0.608904 3.75019 0.315787 3.75019 0.135337 3.93575C-0.0451125 4.1213 -0.0451125 4.42171 0.135337 4.60679L3.34084 7.88086C3.51946 8.06405 3.8167 8.06405 3.99532 7.88086L10.8643 0.810213C11.0452 0.62513 11.0452 0.324251 10.8643 0.139168C10.6839 -0.0463894 10.3908 -0.0463894 10.2103 0.139168Z" fill="#0C8FE4"/>
-				</svg>
-    		)}
-	    
-		    	<div className="message__avatar">
-		    		<img src={avatar} alt={`User ${user.fullname}`} />
-		    	</div>
-		    	<div className="info">
-		    		<div className="message__bubble"> 
-			    		<div className="message__text">
-			    			{text}
-			    		</div>
-		    		</div>
-		    		<div className="message__attachments">
-			          {attachments &&
-			            attachments.map(item => (
-			              <div className="message__attachments-item">
-			                <img src={item.url} alt={item.filename} />
-			              </div>
-			            ))}
-			        </div>
-		    		<span className="message__date">
-		          		{distanceInWordsToNow(date, { addSuffix: true, locale: ruLocale })}
-		    		</span>
-	    		</div>
-	   
-    	</div>
+const Message = ({
+  avatar,
+  user,
+  text,
+  date,
+  isMe,
+  isReaded,
+  attachments,
+  isTyping,
+  audio
+}) => {
+
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  return (
+    <div
+      className={classNames("message", {
+        "message--isme": isMe,
+        "message--is-typing": isTyping,
+        "message--is-audio": audio,
+        "message--image": attachments && attachments.length === 1
+      })}
+    >
+      <div className="message__content">
+        <IconReaded isMe={isMe} isReaded={isReaded} />
+        <div className="message__avatar">
+          <img src={avatar} alt={`Avatar ${user.fullname}`} />
+        </div>
+        <div className="message__info">
+          {(audio || text || isTyping) && (
+            <div className="message__bubble">
+              {text && <p className="message__text">{text}</p>}
+              {isTyping && (
+                <div className="message__typing">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+              )}
+              {
+                audio && <div className="message__audio">
+                  <div className="message__audio--progress" style={{ width: '40%'}}>1</div>
+                  <div className="message__audio--info">
+                    <div className="message__audio--btn">
+                      <button>
+                      {isPlaying ? <img src={pause} alt="pause" width="15" height="15" /> : <img src={play} alt="play" width="15" height="15" />}
+                      </button>
+                    </div>
+                    <div className="message__audio--wave"> img </div>
+                    <span className="message__audio--duration">00:19 </span>
+                  </div>
+                </div>
+              }
+            </div>
+          )}
+
+          {attachments && (
+            <div className="message__attachments">
+              attachments.map(item => (
+                <div className="message__attachments-item">
+                  <img src={item.url} alt={item.filename} />
+                </div>
+              ))
+            </div>
+           )}
+
+          {date && (
+            <span className="message__date">
+              <Time date={date} />
+            </span>
+          )}
+        </div>
+      </div>
     </div>
-);
+)};
+
+// const Message = ({
+//   avatar,
+//   user,
+//   text,
+//   date,
+//   isMe,
+//   isReaded,
+//   attachments,
+//   isTyping
+// }) => (
+//   <div
+//     className={classNames("message", {
+//       "message--isme": isMe,
+//       "message--is-typing": isTyping,
+//       "message--image": attachments && attachments.length === 1
+//     })}
+//   >
+//     <div className="message__content">
+//       <IconReaded isMe={isMe} isReaded={isReaded} />
+//       <div className="message__avatar">
+//         <img src={avatar} alt={`Avatar ${user.fullname}`} />
+//       </div>
+//       <div className="message__info">
+//         {(text || isTyping) && (
+//           <div className="message__bubble">
+//             {text && <p className="message__text">{text}</p>}
+//             {isTyping && (
+//               <div className="message__typing">
+//                 <span />
+//                 <span />
+//                 <span />
+//               </div>
+//             )}
+//           </div>
+//         )}
+//         <div className="message__attachments">
+//           {attachments &&
+//             attachments.map(item => (
+//               <div className="message__attachments-item">
+//                 <img src={item.url} alt={item.filename} />
+//               </div>
+//             ))}
+//         </div>
+//         {date && (
+//           <span className="message__date">
+//             <Time date={date} />
+//           </span>
+//         )}
+//       </div>
+//     </div>
+//   </div>
+// );
 
 Message.defaultProps = {
-	user: {}
-}
+  user: {}
+};
 
 Message.propTypes = {
-    className: PropTypes.string,
-    avatar: PropTypes.string,
-    text: PropTypes.string,
-    date: PropTypes.string,
-    user: PropTypes.object,
-    attachments: PropTypes.array
+  avatar: PropTypes.string,
+  text: PropTypes.string,
+  date: PropTypes.string,
+  user: PropTypes.object,
+  attachments: PropTypes.array,
+  isMe: PropTypes.bool,
+  isReaded: PropTypes.bool,
+  isTyping: PropTypes.bool
 };
 
 export default Message;
