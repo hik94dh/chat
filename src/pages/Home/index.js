@@ -17,7 +17,7 @@ const Home = () => (
                 "Мы все свидетельствуем Вам глубочайшее наше почтение и целуем Ваши ручки, дражайший папенька: Михайла, Федор, Варвара и Андрюша",
               created_at: 'Sun May 28 2019 16:55:40',
               user: {
-                _id: 1,
+                _id: 'd95b2b8d46ebc',
                 fullname: "Фёдор Достоевский",
                 avatar: null,
                 // isOnline: true
@@ -38,9 +38,8 @@ const Home = () => (
         />
         <Message
           avatar="https://sun1-89.userapi.com/c850424/v850424867/f6869/B-F_i2BilOA.jpg?ava=1"
-          text="Hello, World!"
           date="Sun Apr 21 2019 21:59:29"
-          audio="http......."
+          audio="https://d1490khl9dq1ow.cloudfront.net/music/mp3preview/bbc-051117-Epic-Movie-Trailer-Music-Theme-15-Sec.mp3"
         />
 
 
