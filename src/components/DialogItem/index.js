@@ -5,7 +5,6 @@ import format from 'date-fns/format';
 import isToday from 'date-fns/is_today';
 
 import { IconReaded, Avatar } from '../';
-import './styles.scss';
 
 
 const getMessageTime = created_at => {
@@ -14,33 +13,33 @@ const getMessageTime = created_at => {
     } else {
       return format(created_at, 'DD.MM.YYYY')
     }
-}
+};
 
-const DialogItem = ({ user, unreaded, isMe, created_at, text }) => (
-  <div
-    className={classNames("dialogs__item", {
-      ["dialogs__item--online"]: user.isOnline
-    })}
-  >
-    <div className="dialogs__item-avatar">
-       <Avatar user={user} />
+const DialogItem = ({ user, undread, created_at, text, isMe }) => (
+    <div
+        className={classNames("dialogs__item", {
+            "dialogs__item--online": user.isOnline
+        })}
+    >
+        <div className="dialogs__item-avatar">
+            <Avatar user={user} />
+        </div>
+        <div className="dialogs__item-info">
+            <div className="dialogs__item-info-top">
+                <b>{user.fullname}</b>
+                <span>{getMessageTime(created_at)}</span>
+            </div>
+            <div className="dialogs__item-info-bottom">
+                <p>{text}</p>
+                {isMe && <IconReaded isMe={true} isReaded={false} />}
+                {undread > 0 && (
+                    <div className="dialogs__item-info-bottom-count">
+                        {undread > 9 ? "+9" : undread}
+                    </div>
+                )}
+            </div>
+        </div>
     </div>
-    <div className="dialogs__item-info">
-      <div className="dialogs__item-info-top">
-        <b>{user.fullname}</b>
-        <span> {getMessageTime(created_at)} </span>
-      </div>
-      <div className="dialogs__item-info-bottom">
-        <p>{text}</p>
-        { isMe && <IconReaded isMe isReaded={false} />}
-        {unreaded > 0 && (
-          <div className="dialogs__item-info-bottom-count">
-            {unreaded > 9 ? "+9" : unreaded}
-          </div>
-        )}
-      </div>
-    </div>
-  </div>
 );
 
 export default DialogItem;
